@@ -274,7 +274,7 @@ class ComponentBase:
             except (ValueError, AttributeError):
                 pass
 
-        with cache.transact():
+        with cache.transact(retry=True):
             cache.set(key, value, tag=tag, expire=expire, retry=True)
 
     def file_blueprinter(self, cache, file_to):

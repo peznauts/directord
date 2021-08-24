@@ -96,13 +96,6 @@ class ClientStatus:
         self.stderr = ctx.driver.nullbyte
         self.stdout = ctx.driver.nullbyte
 
-    def start_processing(self):
-        self.ctx.driver.socket_send(
-            socket=self.socket,
-            msg_id=self.job_id,
-            control=self.ctx.driver.job_processing,
-        )
-
     def __enter__(self):
         """Upon enter, return the context manager object for future updates.
 
