@@ -179,6 +179,7 @@ class Client(interface.Interface):
 
         self.log.debug("Running component:%s", command.decode())
         component_kwargs = dict(cache=None, job=job)
+        conn.start_processing()
         if job.get("parent_async"):
             self.log.debug("Running [ %s ] in async queue", job_id)
             self.q_async.put((component_kwargs, command, info, cached))
