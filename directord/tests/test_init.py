@@ -12,9 +12,11 @@
 #   License for the specific language governing permissions and limitations
 #   under the License.
 
+import queue
 import time
 import unittest
 
+from unittest import mock
 from unittest.mock import ANY
 from unittest.mock import patch
 
@@ -337,3 +339,17 @@ class TestDirectordInit(unittest.TestCase):
                         "directord_user_component_notacomponent",
                         "/test/path/share/directord/components/notacomponent.py",  # noqa
                     )
+
+
+class TestIndicator(unittest.TestCase):
+    def setUp(self):
+        self.multi_patched = mock.patch("directord.multiprocessing.Process")
+        self.multi = self.multi_patched.start()
+
+    def tearDown(self):
+        self.multi_patched.stop()
+
+    def test_class_objects_work_q(self):
+        spinner = directord.Spinner(work_q=queue.Queue())
+        self.assertEqual(isinstance(spinner.work_q, queue.Queue), True)
+        self.assertEqual(spinner.run, False)
