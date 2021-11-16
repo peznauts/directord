@@ -93,6 +93,8 @@ class Bootstrap(directord.Processor):
                 )
 
         args = entry.get("args", dict(port=22, username=getpass.getuser()))
+        jobs = entry.get("jobs", list())
+
         for target in entry["targets"]:
             try:
                 target_host = target["host"]
@@ -104,7 +106,7 @@ class Bootstrap(directord.Processor):
                     "username", args.get("username", getpass.getuser())
                 ),
                 port=target.get("port", args.get("port", 22)),
-                jobs=entry["jobs"],
+                jobs=jobs,
             )
             name = target.get("name")
             if name:
